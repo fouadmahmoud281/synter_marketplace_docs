@@ -1,0 +1,86 @@
+site_name: AI Marketplace Documentation
+site_description: Comprehensive documentation for the AI Marketplace platform
+site_author: Your Organization
+repo_url: https://github.com/your-org/ai-marketplace-docs
+repo_name: AI Marketplace Docs
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - tags
+  - git-revision-date-localized:
+      type: datetime
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-org/ai-marketplace-docs
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/your-org
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/company/your-org
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Introduction: getting-started/introduction.md
+    - Quick Start: getting-started/quick-start.md
+    - Installation: getting-started/installation.md
+  - User Guide:
+    - Overview: user-guide/overview.md
+    - Features: user-guide/features.md
+    - Best Practices: user-guide/best-practices.md
+  - API Reference:
+    - Authentication: api-reference/authentication.md
+    - Endpoints: api-reference/endpoints.md
+    - Models: api-reference/models.md
+  - Tutorials:
+    - Basic Usage: tutorials/basic-usage.md
+    - Advanced Features: tutorials/advanced-features.md
+  - FAQ: faq.md 

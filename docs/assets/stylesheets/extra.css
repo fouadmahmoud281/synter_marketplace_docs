@@ -1,0 +1,115 @@
+/* Custom styling for AI Marketplace Documentation */
+
+/* Enhanced typography */
+.md-typeset h1 {
+    color: var(--md-primary-fg-color);
+    font-weight: 700;
+    margin-bottom: 1.5em;
+}
+
+.md-typeset h2 {
+    border-bottom: 2px solid var(--md-primary-fg-color);
+    padding-bottom: 0.3em;
+    margin-top: 2em;
+}
+
+/* Code blocks styling */
+.md-typeset pre > code {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Custom admonition styling */
+.md-typeset .admonition {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Navigation enhancements */
+.md-nav__link {
+    transition: color 0.2s ease;
+}
+
+.md-nav__link:hover {
+    color: var(--md-primary-fg-color);
+}
+
+/* Custom button styling */
+.md-typeset .md-button {
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.md-typeset .md-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Table styling */
+.md-typeset table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.md-typeset table th {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+}
+
+/* Custom card styling */
+.md-typeset .grid {
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    margin: 1em 0;
+}
+
+.md-typeset .grid .card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.md-typeset .grid .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Custom mermaid diagram styling */
+.mermaid {
+    background-color: var(--md-code-bg-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Custom footer styling */
+.md-footer {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+}
+
+/* Custom search styling */
+.md-search__input {
+    border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--md-default-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-primary-fg-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-accent-fg-color);
+} 
