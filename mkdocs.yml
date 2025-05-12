@@ -1,4 +1,4 @@
-site_name: AI Marketplace Documentation
+site_name: Syntera Marketplace Documentation
 site_description: Comprehensive documentation for the AI Marketplace platform
 site_author: Your Organization
 repo_url: https://github.com/your-org/ai-marketplace-docs
@@ -56,6 +56,7 @@ plugins:
   - tags
   - git-revision-date-localized:
       type: datetime
+      fallback_to_build_date: true
 
 extra:
   social:
@@ -70,12 +71,48 @@ nav:
   - Home: index.md
   - Getting Started:
     - Introduction: getting-started/introduction.md
-    - Quick Start: getting-started/quick-start.md
-    - Installation: getting-started/installation.md
-  - User Guide:
-    - Overview: user-guide/overview.md
-    - Features: user-guide/features.md
-    - Best Practices: user-guide/best-practices.md
+  - Core Components:
+    - LLM Integration:
+      - Overview: components/llm/overview.md
+      - Available Models: components/llm/models.md
+      - Getting Started: components/llm/getting-started.md
+      - Model Selection: components/llm/model-selection.md
+      - Model Configuration: components/llm/model-configuration.md
+      - API Reference: components/llm/api-reference.md
+      - Security & Compliance: components/llm/security.md
+      - Rate Limits & Performance: components/llm/performance.md
+      - Troubleshooting: components/llm/troubleshooting.md
+      - Use Cases: components/llm/use-cases.md
+      - Best Practices: components/llm/best-practices.md
+      - FAQs: components/llm/faq.md
+    - Vector Database:
+      - Platform Overview: components/vector-db/overview.md
+      - Available Vector Databases: components/vector-db/overview.md
+      - Getting Started: components/vector-db/overview.md
+      - Database Selection Guide: components/vector-db/overview.md
+      - Database Configuration: components/vector-db/overview.md
+      - API Reference: components/vector-db/overview.md
+      - Security & Compliance: components/vector-db/overview.md
+      - Performance Optimization: components/vector-db/overview.md
+      - Troubleshooting: components/vector-db/overview.md
+      - Use Case Examples: components/vector-db/overview.md
+      - Best Practices: components/vector-db/overview.md
+      - FAQs: components/vector-db/overview.md
+    - Agentic System:
+      - Overview: components/agentic/overview.md
+      - Architecture: components/agentic/architecture.md
+      - Configuration: components/agentic/configuration.md
+      - Examples: components/agentic/examples.md
+    - Monitoring & Dashboard:
+      - Overview: components/monitoring/overview.md
+      - Metrics: components/monitoring/metrics.md
+      - Alerts: components/monitoring/alerts.md
+      - Visualization: components/monitoring/visualization.md
+    - User Management:
+      - Overview: components/user-management/overview.md
+      - Authentication: components/user-management/authentication.md
+      - Authorization: components/user-management/authorization.md
+      - Settings: components/user-management/settings.md
   - API Reference:
     - Authentication: api-reference/authentication.md
     - Endpoints: api-reference/endpoints.md

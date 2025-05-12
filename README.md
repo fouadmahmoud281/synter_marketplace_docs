@@ -93,6 +93,44 @@ Custom styles are in `docs/assets/stylesheets/extra.css`. You can modify:
 3. Make your changes
 4. Submit a pull request
 
+## Deployment
+
+### Prerequisites for Deployment
+- Docker installed on the deployment server
+- Access to the deployment environment
+- Required environment variables configured
+
+### Deployment Steps
+
+1. Build the Docker image:
+   ```bash
+   docker build -t ai-marketplace-docs .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -d -p 8000:8000 --name ai-marketplace-docs ai-marketplace-docs
+   ```
+
+3. For production deployment, use the following environment variables:
+   ```bash
+   export MKDOCS_SITE_URL=https://your-domain.com
+   export MKDOCS_SITE_DESCRIPTION="AI Marketplace Documentation"
+   ```
+
+4. For HTTPS deployment, ensure SSL certificates are properly configured in your web server (nginx/apache).
+
+### CI/CD Pipeline
+The repository includes GitHub Actions workflow for automated deployment. The pipeline:
+- Builds the documentation
+- Runs tests
+- Deploys to the specified environment
+
+### Monitoring
+- Application logs are available in the container logs
+- Health check endpoint: `/health`
+- Metrics endpoint: `/metrics`
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
