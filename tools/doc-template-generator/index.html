@@ -10,7 +10,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Syntera Documentation  Generator</h1>
+    <h1>Syntera Documentation Generator</h1>
+    
+    <div class="ai-button-container">
+      <button type="button" id="ai-generate-button" class="ai-generate-button">
+        <span class="ai-icon">✨</span>
+        Generate with AI
+      </button>
+    </div>
     
     <div class="form-layout">
       <div class="form-container">
@@ -275,18 +282,18 @@
   </div>
   
   <!-- Load scripts at the end for better performance -->
-  <!-- Make sure generate.js is loaded first as form-controls.js depends on it -->
-  <script>
-    console.log('Starting script loading');
-    window.onerror = function(msg, url, lineNo, columnNo, error) {
-      console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
-      return false;
-    };
-  </script>
-  <script src="generate.js"></script>
+  <script src="data.js"></script>
+  <script src="ui.js"></script>
   <script src="form-controls.js"></script>
-  <script>
-    console.log('All scripts loaded');
+  <script src="generate.js"></script>
+  <script type="module">
+    import { llmDocGenerator } from './langchain.js';
+    import llmPopup from './llm-popup.js';
+    
+    // Initialize the AI generate button
+    document.getElementById('ai-generate-button').addEventListener('click', () => {
+      llmPopup.show();
+    });
   </script>
 </body>
 </html>

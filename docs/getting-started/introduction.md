@@ -401,7 +401,7 @@
       <div class="guide-group">
         <h3>Security Features</h3>
         <ul class="guide-list">
-          <li><a href="user-management/authentication.md" class="guide-link">
+          <li><a href="/getting-started/llm/Syntera_Marketplace_Registration_Guide" class="guide-link">
             <span class="guide-number">1</span>
             <div class="guide-info">
               <h4>Authentication Setup</h4>

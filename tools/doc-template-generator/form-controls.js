@@ -440,6 +440,95 @@ function collectFormData() {
   return formData;
 }
 
+// Function to update phase tabs
+function updatePhaseTabs() {
+  const phaseList = document.getElementById('phaseList');
+  const phaseTabs = document.getElementById('phaseTabs');
+  const phaseContents = document.getElementById('phaseContents');
+  
+  if (!phaseList || !phaseTabs || !phaseContents) return;
+  
+  // Clear existing tabs and contents
+  phaseTabs.innerHTML = '';
+  phaseContents.innerHTML = '';
+  
+  // Get all phase names
+  const phaseNames = Array.from(phaseList.querySelectorAll('input[name="phaseName[]"]'))
+    .map(input => input.value.trim())
+    .filter(name => name !== '');
+  
+  // Create tabs and content sections
+  phaseNames.forEach((name, index) => {
+    const phaseNum = index + 1;
+    
+    // Create tab
+    const tab = document.createElement('button');
+    tab.className = 'phase-tab';
+    tab.textContent = name;
+    tab.onclick = () => showPhase(phaseNum);
+    phaseTabs.appendChild(tab);
+    
+    // Create content section
+    const content = document.createElement('div');
+    content.id = `phaseContent${phaseNum}`;
+    content.className = 'phase-content';
+    content.innerHTML = `
+      <div class="form-group">
+        <label>Phase Introduction:
+          <textarea name="phaseIntro${phaseNum}" rows="3"></textarea>
+        </label>
+      </div>
+      
+      <div class="form-group">
+        <label>Features:</label>
+        <div id="featureGrid${phaseNum}" class="feature-grid"></div>
+        <button type="button" class="add-feature" onclick="addFeature(${phaseNum})">+ Add Feature</button>
+      </div>
+      
+      <div class="form-group">
+        <label>Action Steps:</label>
+        <div id="actionSteps${phaseNum}" class="action-steps"></div>
+        <button type="button" class="add-step" onclick="addActionStep(${phaseNum})">+ Add Step</button>
+      </div>
+    `;
+    phaseContents.appendChild(content);
+  });
+  
+  // Show first phase by default
+  if (phaseNames.length > 0) {
+    showPhase(1);
+  }
+}
+
+// Function to show a specific phase
+function showPhase(phaseNum) {
+  // Hide all phase contents
+  document.querySelectorAll('.phase-content').forEach(content => {
+    content.style.display = 'none';
+  });
+  
+  // Remove active class from all tabs
+  document.querySelectorAll('.phase-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  // Show selected phase content
+  const selectedContent = document.getElementById(`phaseContent${phaseNum}`);
+  if (selectedContent) {
+    selectedContent.style.display = 'block';
+  }
+  
+  // Activate selected tab
+  const selectedTab = document.querySelectorAll('.phase-tab')[phaseNum - 1];
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
+}
+
+// Make functions available globally
+window.updatePhaseTabs = updatePhaseTabs;
+window.showPhase = showPhase;
+
 // Initialize the form
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize any form controls that need setup
