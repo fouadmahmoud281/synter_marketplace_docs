@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentation  Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Syntera Documentation  Generator</h1>
+    
+    <div class="form-layout">
+      <div class="form-container">
+        <form id="guideForm">
+          <!-- General Information -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Basic Information</h2>
+              <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+              <label>
+                Guide Title:
+                <input type="text" name="guideTitle" value="Deploying LLM Models with Syntera" required />
+              </label>
+              
+              <label>
+                Guide Description:
+                <textarea name="guideDescription" required>A comprehensive guide to deploying large language models on the Syntera platform</textarea>
+              </label>
+              
+              <label>
+                Estimated Time:
+                <input type="text" name="estimatedTime" value="~30 minutes" required />
+              </label>
+              
+              <label>
+                Guide Icon Source:
+                <input type="text" name="guideIconSrc" value="/assets/Brain.svg" required />
+              </label>
+              
+              <label>
+                Guide Icon Alt:
+                <input type="text" name="guideIconAlt" value="LLM Integration" required />
+              </label>
+            </div>
+          </div>
+
+          <!-- Table of Contents -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Table of Contents</h2>
+              <span class="toggle-icon"></span>
+            </div>
+            <div class="section-content">
+              <div class="list-container" id="tocList">
+                <div class="list-item">
+                  <input type="text" name="tocItem[]" value="Prerequisites" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addListItem(this, 'tocItem')">+</button>
+                    <button type="button" class="remove-item" onclick="removeListItem(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="tocItem[]" value="Workflow Overview" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addListItem(this, 'tocItem')">+</button>
+                    <button type="button" class="remove-item" onclick="removeListItem(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="tocItem[]" value="Troubleshooting" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addListItem(this, 'tocItem')">+</button>
+                    <button type="button" class="remove-item" onclick="removeListItem(this)">-</button>
+                  </div>
+                </div>
+              </div>
+              <small>These will be used as anchor links in the guide. Each item will create a section heading.</small>
+            </div>
+          </div>
+
+          <!-- Prerequisites -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Prerequisites</h2>
+              <span class="toggle-icon"></span>
+            </div>
+            <div class="section-content">
+              <div class="list-container" id="prerequisitesList">
+                <div class="list-item">
+                  <input type="text" name="prerequisite[]" value="Syntera account with appropriate permissions" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addListItem(this, 'prerequisite')">+</button>
+                    <button type="button" class="remove-item" onclick="removeListItem(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="prerequisite[]" value="Access to Syntera API" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addListItem(this, 'prerequisite')">+</button>
+                    <button type="button" class="remove-item" onclick="removeListItem(this)">-</button>
+                  </div>
+                </div>
+              </div>
+              <small>List any requirements users need to follow this guide. Each item will be displayed as a bullet point.</small>
+            </div>
+          </div>
+
+          <!-- Workflow Overview -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Workflow Overview</h2>
+              <span class="toggle-icon"></span>
+            </div>
+            <div class="section-content">
+              <label>
+                Workflow Title:
+                <input type="text" name="workflowOverviewTitle" value="LLM Model Deployment Workflow" required />
+              </label>
+              
+              <div class="phase-list" id="phaseList">
+                <div class="list-item">
+                  <input type="text" name="phaseName[]" value="Browse Model Catalog" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addPhase(this)">+</button>
+                    <button type="button" class="remove-item" onclick="removePhase(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="phaseName[]" value="Configure Inference Endpoint" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addPhase(this)">+</button>
+                    <button type="button" class="remove-item" onclick="removePhase(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="phaseName[]" value="Create Dedicated Endpoint" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addPhase(this)">+</button>
+                    <button type="button" class="remove-item" onclick="removePhase(this)">-</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <input type="text" name="phaseName[]" value="Test and Monitor" />
+                  <div class="button-group">
+                    <button type="button" class="add-item" onclick="addPhase(this)">+</button>
+                    <button type="button" class="remove-item" onclick="removePhase(this)">-</button>
+                  </div>
+                </div>
+              </div>
+              <small>Each phase will have its own set of configurable sections below. Add phases in the order they should appear.</small>
+            </div>
+          </div>
+
+          <!-- Dynamic Phase Configuration -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Phase Configuration</h2>
+              <span class="toggle-icon"></span>
+            </div>
+            <div class="section-content">
+              <p><em>Configure each phase using the fields below. The phases will update based on your entries above.</em></p>
+              
+              <div class="tab-container" id="phaseTabs">
+                <!-- Tabs will be generated dynamically -->
+                <div class="tab active" onclick="switchPhaseTab(0)">Phase 1</div>
+              </div>
+              
+              <div id="phaseConfigContainer">
+                <!-- Phase configuration will be generated here -->
+                <div class="phase-container" data-phase="1">
+                  <div class="phase-title">Phase 1 Configuration</div>
+                  
+                  <label>
+                    Phase Intro:
+                    <textarea name="phaseIntro1" placeholder="Enter intro text for this phase"></textarea>
+                    <small>Introductory paragraph that explains this phase</small>
+                  </label>
+                  
+                  <div class="subsection">
+                    <h3>Feature Grid</h3>
+                    <div class="feature-grid-container" id="featureGrid1">
+                      <div class="feature-item">
+                        <label>Feature Title:
+                          <input type="text" name="featureTitle1[]" placeholder="e.g., Model Search" />
+                        </label>
+                        <label>Feature Description:
+                          <input type="text" name="featureDescription1[]" placeholder="e.g., Search by name" />
+                        </label>
+                        <button type="button" class="add-feature" onclick="addFeature(1, this)">+ Add Feature</button>
+                      </div>
+                    </div>
+                    <small>These features will be displayed as cards inside the phase</small>
+                  </div>
+                  
+                  <div class="subsection">
+                    <h3>Action Steps</h3>
+                    <div class="action-steps-container" id="actionSteps1">
+                      <div class="action-step">
+                        <label>Step Highlight:
+                          <input type="text" name="stepHighlight1[]" placeholder="e.g., Step 1" />
+                        </label>
+                        <label>Step Note:
+                          <input type="text" name="stepNote1[]" placeholder="e.g., Do something important" />
+                        </label>
+                        <button type="button" class="add-step" onclick="addActionStep(1, this)">+ Add Step</button>
+                      </div>
+                    </div>
+                    <small>These steps will guide users through the process</small>
+                  </div>
+                  
+                  <label>
+                    Callout Info:
+                    <textarea name="phaseCalloutInfo1" placeholder="Enter info callout text for this phase"></textarea>
+                    <small>Important information that will be displayed in a highlighted box</small>
+                  </label>
+                  
+                  <label>
+                    Code Block:
+                    <textarea name="phaseCodeBlock1" placeholder="Enter code block content here"></textarea>
+                    <small>Code examples or commands related to this phase</small>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Configuration -->
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this.parentNode)">
+              <h2>Troubleshooting</h2>
+              <span class="toggle-icon"></span>
+            </div>
+            <div class="section-content">
+              <div class="troubleshooting-container">
+                <div class="troubleshooting-item">
+                  <label>Question:
+                    <input type="text" name="troubleshootingTitle[]" value="How do I handle model deployment failures?" />
+                  </label>
+                  <div class="troubleshooting-content">
+                    <label>Solution Label:
+                      <input type="text" name="troubleshootingLabel[]" value="Solution" />
+                    </label>
+                    <label>Solution Description:
+                      <textarea name="troubleshootingDescription[]">Check the deployment logs for specific error messages and ensure all prerequisites are met.</textarea>
+                    </label>
+                  </div>
+                  <div class="button-group">
+                    <button type="button" class="add-troubleshooting" onclick="addTroubleshooting(this)">+ Add Question</button>
+                    <button type="button" class="remove-troubleshooting" onclick="removeTroubleshooting(this)">- Remove Question</button>
+                  </div>
+                </div>
+              </div>
+              <small>FAQ items that will appear in the troubleshooting section</small>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions">
+            <button type="submit">Generate Documentation</button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="preview-container">
+        <h2>Preview</h2>
+        <p>Your markdown will appear here after generation.</p>
+        <div id="markdownOutput"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Load scripts at the end for better performance -->
+  <!-- Make sure generate.js is loaded first as form-controls.js depends on it -->
+  <script>
+    console.log('Starting script loading');
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+      console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+      return false;
+    };
+  </script>
+  <script src="generate.js"></script>
+  <script src="form-controls.js"></script>
+  <script>
+    console.log('All scripts loaded');
+  </script>
+</body>
+</html>

@@ -155,7 +155,7 @@
       <div class="guide-group">
         <h3>Basic Operations</h3>
         <ul class="guide-list">
-          <li><a href="vector-db/setup.md" class="guide-link">
+          <li><a href="/getting-started/llm/Getting_Started_with_Vector_Databases" class="guide-link">
             <span class="guide-number">1</span>
             <div class="guide-info">
               <h4>Setting Up Vector Database</h4>
