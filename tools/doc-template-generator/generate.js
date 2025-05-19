@@ -134,9 +134,22 @@ window.handleFormSubmit = async function(event) {
   event.preventDefault(); // Prevent default form submission
 
   try {
-    // Load template
-    const response = await fetch('template.md');
-    const templateSource = await response.text();
+    // Load template - try both development and production paths
+    let templateSource;
+    try {
+      // Try production path first
+      const response = await fetch('/template.md');
+      if (!response.ok) {
+        // If not found, try development path
+        const devResponse = await fetch('template.md');
+        templateSource = await devResponse.text();
+      } else {
+        templateSource = await response.text();
+      }
+    } catch (error) {
+      console.error("Error loading template:", error);
+      throw new Error("Failed to load template.md file");
+    }
 
     // Compile template using Handlebars
     const template = Handlebars.compile(templateSource);

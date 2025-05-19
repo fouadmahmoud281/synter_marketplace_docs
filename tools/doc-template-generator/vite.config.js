@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
   server: {
@@ -20,5 +21,6 @@ export default defineConfig({
         assetFileNames: '[name]-[hash].[ext]'
       }
     }
-  }
+  },
+  publicDir: 'public'
 });
