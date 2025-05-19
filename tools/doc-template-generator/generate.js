@@ -53,6 +53,82 @@ Handlebars.registerHelper('getPhaseClass', function(index) {
   return classes[index % classes.length] || '';
 });
 
+// Function to collect all form data
+function collectFormData() {
+  const form = document.getElementById('guideForm');
+  const formData = new FormData(form);
+  const data = {};
+
+  // Basic information
+  data.guideTitle = formData.get('guideTitle');
+  data.guideDescription = formData.get('guideDescription');
+  data.estimatedTime = formData.get('estimatedTime');
+  data.guideIconSrc = formData.get('guideIconSrc');
+  data.guideIconAlt = formData.get('guideIconAlt');
+
+  // Table of Contents
+  data.tocLinks = Array.from(formData.getAll('tocItem[]')).filter(Boolean);
+
+  // Prerequisites
+  data.prerequisites = Array.from(formData.getAll('prerequisite[]')).filter(Boolean);
+
+  // Workflow Overview
+  data.workflowOverviewTitle = formData.get('workflowOverviewTitle');
+  data.phaseNames = Array.from(formData.getAll('phaseName[]')).filter(Boolean);
+
+  // Phase data
+  data.phaseIntros = [];
+  data.phaseFeatures = [];
+  data.phaseActionSteps = [];
+  data.phaseCalloutInfo = [];
+  data.phaseCodeBlock = [];
+
+  // Collect data for each phase
+  data.phaseNames.forEach((_, index) => {
+    const phaseNum = index + 1;
+    
+    // Phase intro
+    data.phaseIntros.push(formData.get(`phaseIntro${phaseNum}`) || '');
+
+    // Phase features
+    const featureTitles = formData.getAll(`featureTitle${phaseNum}[]`);
+    const featureDescriptions = formData.getAll(`featureDescription${phaseNum}[]`);
+    const features = featureTitles.map((title, i) => ({
+      title: title,
+      description: featureDescriptions[i] || ''
+    })).filter(f => f.title || f.description);
+    data.phaseFeatures.push(features);
+
+    // Phase action steps
+    const stepHighlights = formData.getAll(`stepHighlight${phaseNum}[]`);
+    const stepNotes = formData.getAll(`stepNote${phaseNum}[]`);
+    const steps = stepHighlights.map((highlight, i) => ({
+      highlight: highlight,
+      note: stepNotes[i] || ''
+    })).filter(s => s.highlight || s.note);
+    data.phaseActionSteps.push(steps);
+
+    // Phase callout info and code block
+    data.phaseCalloutInfo.push(formData.get(`phaseCalloutInfo${phaseNum}`) || '');
+    data.phaseCodeBlock.push(formData.get(`phaseCodeBlock${phaseNum}`) || '');
+  });
+
+  // Troubleshooting items
+  const troubleshootingTitles = formData.getAll('troubleshootingTitle[]');
+  const troubleshootingLabels = formData.getAll('troubleshootingLabel[]');
+  const troubleshootingDescriptions = formData.getAll('troubleshootingDescription[]');
+  
+  data.troubleshootingItems = troubleshootingTitles.map((title, i) => ({
+    title: title,
+    content: [{
+      label: troubleshootingLabels[i] || 'Solution',
+      description: troubleshootingDescriptions[i] || ''
+    }]
+  })).filter(item => item.title || item.content[0].description);
+
+  return data;
+}
+
 // Main function to handle form submission and generate markdown
 window.handleFormSubmit = async function(event) {
   event.preventDefault(); // Prevent default form submission
@@ -66,102 +142,7 @@ window.handleFormSubmit = async function(event) {
     const template = Handlebars.compile(templateSource);
 
     // Get form data
-    const formData = collectFormData();
-
-    // Process TOC links
-    const tocLinks = formData.get('tocLinks')
-      ? formData.get('tocLinks').split(',').map(t => t.trim()).filter(Boolean)
-      : [];
-
-    // Process prerequisites
-    const prerequisites = formData.get('prerequisites')
-      ? formData.get('prerequisites').split(',').map(p => p.trim()).filter(Boolean)
-      : [];
-
-    // Process phase names
-    const phaseNames = formData.get('phaseNames')
-      ? formData.get('phaseNames').split(',').map(p => p.trim()).filter(Boolean)
-      : [];
-
-    // Process phase data
-    const phaseIntros = [];
-    const phaseFeatures = [];
-    const phaseActionSteps = [];
-    const phaseCalloutInfo = [];
-    const phaseCodeBlock = [];
-
-    for (let i = 0; i < phaseNames.length; i++) {
-      const phaseNumber = i + 1;
-      
-      // Get phase intro
-      phaseIntros.push(formData.get(`phaseIntro${phaseNumber}`) || '');
-      
-      // Get phase features
-      try {
-        const featuresJson = formData.get(`phaseFeatures${phaseNumber}`);
-        phaseFeatures.push(featuresJson ? JSON.parse(featuresJson) : []);
-      } catch (e) {
-        console.error(`Error parsing phaseFeatures${phaseNumber}:`, e);
-        phaseFeatures.push([]);
-      }
-      
-      // Get phase action steps
-      try {
-        const stepsJson = formData.get(`phaseActionSteps${phaseNumber}`);
-        phaseActionSteps.push(stepsJson ? JSON.parse(stepsJson) : []);
-      } catch (e) {
-        console.error(`Error parsing phaseActionSteps${phaseNumber}:`, e);
-        phaseActionSteps.push([]);
-      }
-      
-      // Get phase callout info
-      phaseCalloutInfo.push(formData.get(`phaseCalloutInfo${phaseNumber}`) || '');
-      
-      // Get phase code block
-      phaseCodeBlock.push(formData.get(`phaseCodeBlock${phaseNumber}`) || '');
-    }
-
-    // Process troubleshooting items
-    let troubleshootingItems = [];
-    try {
-      const troubleshootingJson = formData.get('troubleshootingItems');
-      if (troubleshootingJson) {
-        troubleshootingItems = JSON.parse(troubleshootingJson);
-      }
-    } catch (e) {
-      console.error('Error parsing troubleshootingItems:', e);
-    }
-
-    // Process help options
-    let helpOptions = [];
-    try {
-      const helpOptionsJson = formData.get('helpOptions');
-      if (helpOptionsJson) {
-        helpOptions = JSON.parse(helpOptionsJson);
-      }
-    } catch (e) {
-      console.error('Error parsing helpOptions:', e);
-    }
-
-    // Prepare data for template
-    const data = {
-      guideTitle: formData.get('guideTitle') || 'Guide Title',
-      guideDescription: formData.get('guideDescription') || '',
-      estimatedTime: formData.get('estimatedTime') || '',
-      guideIconSrc: formData.get('guideIconSrc') || '',
-      guideIconAlt: formData.get('guideIconAlt') || '',
-      tocLinks: tocLinks,
-      prerequisites: prerequisites,
-      workflowOverviewTitle: formData.get('workflowOverviewTitle') || '',
-      phaseNames: phaseNames,
-      phaseIntros: phaseIntros,
-      phaseFeatures: phaseFeatures,
-      phaseActionSteps: phaseActionSteps,
-      phaseCalloutInfo: phaseCalloutInfo,
-      phaseCodeBlock: phaseCodeBlock,
-      troubleshootingItems: troubleshootingItems,
-      helpOptions: helpOptions
-    };
+    const data = collectFormData();
 
     // Render the template
     const outputMarkdown = template(data);
