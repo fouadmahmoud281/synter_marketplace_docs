@@ -319,7 +319,9 @@ function removeHelpOption(button) {
 
 // You'll also need to modify the generate.js file to handle the new form structure
 // This function will collect form data and convert it to the expected JSON format
-function collectFormData() {
+// Export the collectFormData function to make it available globally
+// Export the collectFormData function to make it available globally
+window.collectFormData = function() {
   const form = document.getElementById('guideForm');
   const formData = new FormData(form);
   
