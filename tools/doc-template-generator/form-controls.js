@@ -1,7 +1,7 @@
 // Functions to handle dynamic form elements
 
 // Add a new item to a list (TOC items, prerequisites)
-function addListItem(button, fieldName) {
+window.addListItem = function(button, fieldName) {
   const listItem = button.closest('.list-item');
   const list = listItem.parentNode;
   const newItem = document.createElement('div');
@@ -26,7 +26,7 @@ function addListItem(button, fieldName) {
 }
 
 // Remove an item from a list
-function removeListItem(button) {
+window.removeListItem = function(button) {
   const listItem = button.closest('.list-item');
   const list = listItem.parentNode;
   
@@ -41,19 +41,19 @@ function removeListItem(button) {
 }
 
 // Add a new phase
-function addPhase(button) {
+window.addPhase = function(button) {
   addListItem(button, 'phaseName');
   updatePhaseConfiguration();
 }
 
 // Function to handle phase removal
-function removePhase(button) {
+window.removePhase = function(button) {
   removeListItem(button);
   updatePhaseConfiguration();
 }
 
 // Update phase configuration based on phase names
-function updatePhaseConfiguration() {
+window.updatePhaseConfiguration = function() {
   const phaseInputs = document.querySelectorAll('input[name="phaseName[]"]');
   const phaseNames = Array.from(phaseInputs).map(input => input.value || `Phase ${Array.from(phaseInputs).indexOf(input) + 1}`);
   
@@ -138,7 +138,7 @@ function updatePhaseConfiguration() {
 }
 
 // Switch between phase tabs
-function switchPhaseTab(index) {
+window.switchPhaseTab = function(index) {
   // Update active tab
   const tabs = document.querySelectorAll('#phaseTabs .tab');
   tabs.forEach((tab, i) => {
@@ -153,7 +153,7 @@ function switchPhaseTab(index) {
 }
 
 // Add a new feature to a phase
-function addFeature(phaseIndex, button) {
+window.addFeature = function(phaseIndex, button) {
   const featureItem = button.closest('.feature-item');
   const container = featureItem.parentNode;
   
@@ -176,7 +176,7 @@ function addFeature(phaseIndex, button) {
 }
 
 // Remove a feature
-function removeFeature(button) {
+window.removeFeature = function(button) {
   const featureItem = button.closest('.feature-item');
   const container = featureItem.parentNode;
   
@@ -193,7 +193,7 @@ function removeFeature(button) {
 }
 
 // Add a new action step to a phase
-function addActionStep(phaseIndex, button) {
+window.addActionStep = function(phaseIndex, button) {
   const stepItem = button.closest('.action-step');
   const container = stepItem.parentNode;
   
@@ -216,7 +216,7 @@ function addActionStep(phaseIndex, button) {
 }
 
 // Remove an action step
-function removeActionStep(button) {
+window.removeActionStep = function(button) {
   const stepItem = button.closest('.action-step');
   const container = stepItem.parentNode;
   
@@ -233,7 +233,7 @@ function removeActionStep(button) {
 }
 
 // Add a new troubleshooting question
-function addTroubleshooting(button) {
+window.addTroubleshooting = function(button) {
   const item = button.closest('.troubleshooting-item');
   const container = item.parentNode;
   
@@ -261,7 +261,7 @@ function addTroubleshooting(button) {
 }
 
 // Remove a troubleshooting question
-function removeTroubleshooting(button) {
+window.removeTroubleshooting = function(button) {
   const item = button.closest('.troubleshooting-item');
   const container = item.parentNode;
   

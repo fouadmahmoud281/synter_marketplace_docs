@@ -1,7 +1,7 @@
 // UI functionality for the document generator
 
 // Toggle section collapse/expand
-function toggleSection(section) {
+window.toggleSection = function(section) {
   section.classList.toggle('collapsed');
   
   // Ensure the toggle icon reflects the current state

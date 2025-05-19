@@ -282,17 +282,26 @@
   </div>
   
   <!-- Load scripts at the end for better performance -->
-  <script src="data.js"></script>
-  <script src="ui.js"></script>
-  <script src="form-controls.js"></script>
-  <script src="generate.js"></script>
+  <script src="data.js" type="module"></script>
+  <script src="ui.js" type="module"></script>
+  <script src="form-controls.js" type="module"></script>
+  <script src="generate.js" type="module"></script>
   <script type="module">
     import { llmDocGenerator } from './langchain.js';
     import llmPopup from './llm-popup.js';
     
+    // Make LLM modules available globally
+    window.llmDocGenerator = llmDocGenerator;
+    window.llmPopup = llmPopup;
+    
     // Initialize the AI generate button
     document.getElementById('ai-generate-button').addEventListener('click', () => {
       llmPopup.show();
+    });
+    
+    // Initialize phase configuration when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      updatePhaseConfiguration();
     });
   </script>
 </body>

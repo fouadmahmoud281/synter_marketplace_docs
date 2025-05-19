@@ -54,7 +54,7 @@ Handlebars.registerHelper('getPhaseClass', function(index) {
 });
 
 // Main function to handle form submission and generate markdown
-async function handleFormSubmit(event) {
+window.handleFormSubmit = async function(event) {
   event.preventDefault(); // Prevent default form submission
 
   try {
